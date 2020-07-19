@@ -1,6 +1,11 @@
 # Define S3 resources.
 # https://aws.amazon.com/s3
 
+# https://www.terraform.io/docs/providers/aws/d/iam_role.html
+data "aws_iam_role" "main" {
+  name = var.role_name
+}
+
 # https://www.terraform.io/docs/providers/aws/r/s3_bucket.html
 resource "aws_s3_bucket" "main" {
   # The name of the bucket.
@@ -49,4 +54,27 @@ resource "aws_s3_bucket" "main" {
 
   # All objects (including locked) are deleted when deleting a bucket.
   force_destroy = true
+}
+
+# https://www.terraform.io/docs/providers/aws/r/s3_bucket_policy.html
+resource "aws_s3_bucket_policy" "domain_policy" {
+  bucket = aws_s3_bucket.main.id
+
+  policy = <<POLICY
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "${data.aws_iam_role.main.arn}"
+            },
+            "Action": [ "s3:*" ],
+            "Resource": [
+                "arn:aws:s3:::${local.bucket_name}/*"
+            ]
+        }
+    ]
+}
+POLICY
 }
