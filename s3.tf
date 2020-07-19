@@ -2,7 +2,7 @@
 # https://aws.amazon.com/s3
 
 # https://www.terraform.io/docs/providers/aws/r/s3_bucket.html
-resource "aws_s3_bucket" "domain" {
+resource "aws_s3_bucket" "main" {
   # The name of the bucket.
   bucket = var.bucket_name
 
