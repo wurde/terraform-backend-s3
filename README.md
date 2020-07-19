@@ -11,8 +11,8 @@ Define the module.
 module "terraform-backend-s3" {
   source = "github.com/wurde/terraform-backend-s3"
 
-  # The name of the bucket.
-  bucket_name = var.bucket_name
+  bucket_name = "example-bucket-name"
+  role_name   = "example-role-name"
 }
 ```
 
