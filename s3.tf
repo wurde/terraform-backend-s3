@@ -71,7 +71,7 @@ resource "aws_s3_bucket_policy" "domain_policy" {
             },
             "Action": [ "s3:*" ],
             "Resource": [
-                "arn:aws:s3:::${local.bucket_name}/*"
+                "arn:aws:s3:::${var.bucket_name}/*"
             ]
         }
     ]
